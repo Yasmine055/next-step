@@ -34,8 +34,8 @@ function UserList() {
       
       // Calculer les statistiques
       const total = data.length;
-      const admins = data.filter(user => user.role === 'admin').length;
-      const standardUsers = data.filter(user => user.role === 'user').length;
+      const admins = data.filter(userItem => userItem.role === 'admin').length;
+      const standardUsers = data.filter(userItem => userItem.role === 'user').length;
       
       setStatistics({
         total,
@@ -73,11 +73,11 @@ function UserList() {
   };
 
   // Filtrage des utilisateurs
-  const filteredUsers = users.filter(user => {
-    const matchesSearch = user.prenom?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         user.nom?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         user.email?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRole = filterRole === 'all' || user.role === filterRole;
+  const filteredUsers = users.filter(userItem => {
+    const matchesSearch = userItem.prenom?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         userItem.nom?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         userItem.email?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesRole = filterRole === 'all' || userItem.role === filterRole;
     return matchesSearch && matchesRole;
   });
 
@@ -231,36 +231,36 @@ function UserList() {
               </div>
             ) : (
               <div className="users-grid">
-                {filteredUsers.map((user) => (
-                  <div key={user._id} className="user-card">
+                {filteredUsers.map((userItem) => (
+                  <div key={userItem._id} className="user-card">
                     <div className="user-card-header">
                       <div className="user-avatar">
                         <span className="avatar-text">
-                          {user.prenom?.charAt(0)?.toUpperCase() || 'U'}
-                          {user.nom?.charAt(0)?.toUpperCase() || ''}
+                          {userItem.prenom?.charAt(0)?.toUpperCase() || 'U'}
+                          {userItem.nom?.charAt(0)?.toUpperCase() || ''}
                         </span>
                       </div>
                       <div className="user-status">
-                        <span className={`status-badge ${user.role}`}>
-                          <i className={`fas ${user.role === 'admin' ? 'fa-crown' : 'fa-user'}`}></i>
-                          {user.role === 'admin' ? 'Admin' : 'User'}
+                        <span className={`status-badge ${userItem.role}`}>
+                          <i className={`fas ${userItem.role === 'admin' ? 'fa-crown' : 'fa-user'}`}></i>
+                          {userItem.role === 'admin' ? 'Admin' : 'User'}
                         </span>
                       </div>
                     </div>
                     
                     <div className="user-card-body">
                       <h3 className="user-name">
-                        {user.prenom} {user.nom}
+                        {userItem.prenom} {userItem.nom}
                       </h3>
                       <div className="user-info">
                         <div className="info-item">
                           <i className="fas fa-envelope"></i>
-                          <span>{user.email}</span>
+                          <span>{userItem.email}</span>
                         </div>
-                        {user.phone && (
+                        {userItem.phone && (
                           <div className="info-item">
                             <i className="fas fa-phone"></i>
-                            <span>{user.phone}</span>
+                            <span>{userItem.phone}</span>
                           </div>
                         )}
                       </div>
@@ -269,14 +269,14 @@ function UserList() {
                     {user && user.role === 'admin' && (
                       <div className="user-card-actions">
                         <button 
-                          onClick={() => handleEditUser(user._id)}
+                          onClick={() => handleEditUser(userItem._id)}
                           className="action-btn edit-btn"
                           title="Modifier"
                         >
                           <i className="fas fa-edit"></i>
                         </button>
                         <button 
-                          onClick={() => handleDelete(user._id)}
+                          onClick={() => handleDelete(userItem._id)}
                           className="action-btn delete-btn"
                           title="Supprimer"
                         >
